@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVETLANKA | Official Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ОСНОВНИ НАСТРОЙКИ */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            overflow-x: hidden;
+        }
+
+        /* 1. HEADER (НАВИГАЦИЯ) */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 10%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: #000;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #a1a1a1;
+        }
+
+        /* 2. ВИДЕО СЕКЦИЯ (ЦЯЛ ЕКРАН) */
+        .hero-section {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-color: #000;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 0;
+        }
+
+        /* Контейнер за вграждане на YouTube */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Блокира кликовете и скрива бутоните */
+        }
+
+        .video-container iframe {
+            width: 100vw;
+            height: 56.25vw; /* 16:9 съотношение за десктоп */
+            min-height: 100vh;
+            min-width: 177.77vh; /* Принуждава видеото да се разпъне вертикално */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: none;
+        }
+
+        /* Невидим щит над видеото */
+        .video-overlay-shield {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.15); /* Леко затъмнение за по-добър контраст */
+            z-index: 2;
+        }
+
+        /* ТЕКСТ И GHOST БУТОН ВЪРХУ ВИДЕОТО */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            color: #ffffff;
+            padding: 0 20px;
+        }
+
+        .hero-content h1 {
+            font-size: 56px;
+            font-weight: 200;
+            letter-spacing: 16px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            /* Двойна силна сянка, за да изпъква на всякакъв фон */
+            text-shadow: 2px 4px 15px rgba(0, 0, 0, 0.6), 0px 0px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Прозрачен Ghost бутон */
+        .ghost-button {
+            display: inline-block;
+            padding: 14px 36px;
+            border: 1px solid #ffffff;
+            background-color: transparent;
+            color: #ffffff;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .ghost-button:hover {
+            background-color: #ffffff;
+            color: #000000;
+            box-shadow: 0 4px 25px rgba(255,255,255,0.4);
+        }
+
+        /* 3. СЕКЦИЯ С ПАПКИТЕ (PORTFOLIO) */
+        .portfolio-section {
+            padding: 100px 10%;
+            background-color: #ffffff;
+        }
+
+        .portfolio-section h2 {
+            font-size: 28px;
+            font-weight: 300;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Решетка за 4-те папки */
+        .folders-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 колони на десктоп */
+            gap: 40px;
+        }
+
+        .folder-item {
+            text-decoration: none;
+            color: #000;
+            display: block;
+        }
+
+        .image-wrapper {
+            width: 100%;
+            height: 400px; /* Фиксирана елегантна височина */
+            overflow: hidden;
+            background-color: #f0f0f0;
+            margin-bottom: 15px;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Снимката запълва пространството без да се криви */
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        /* Ефект при посочване на папка */
+        .folder-item:hover .image-wrapper img {
+            transform: scale(1.03);
+        }
+
+        .folder-item h3 {
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+
+        .folder-item p {
+            font-size: 11px;
+            color: #777;
+            letter-spacing: 1px;
+        }
+
+        /* 4. FOOTER (НАЙ-ДОЛУ) */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            border-top: 1px solid #eeeeee;
+            font-size: 11px;
+            color: #999;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* 5. ОПТИМИЗАЦИЯ ЗА МОБИЛНИ ТЕЛЕФОНИ */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 5%;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 20px;
+            }
+
+            .hero-content h1 {
+                font-size: 34px;
+                letter-spacing: 10px;
+            }
+
+            .folders-grid {
+                grid-template-columns: 1fr; /* 1 колона на телефон */
+                gap: 30px;
+            }
+
+            .image-wrapper {
+                height: 280px;
+            }
+            
+            .video-container iframe {
+                /* Оптимизация на видеото специално за вертикални телефонни екрани */
+                width: 177.77vh;
+                height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo">SVETLANKA</a>
+        <nav>
+            <ul>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero-section">
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/vZfIeJ16rng?autoplay=1&mute=1&controls=0&loop=1&playlist=vZfIeJ16rng&rel=0&showinfo=0&iv_load_policy=3&modestbranding=1&disablekb=1&playsinline=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="video-overlay-shield"></div>
+        
+        <div class="hero-content">
+            <h1>SVETLANKA</h1>
+            <a href="#portfolio" class="ghost-button">View Portfolio</a>
+        </div>
+    </section>
+
+    <section class="portfolio-section" id="portfolio">
+        <h2>Portfolio</h2>
+        
+        <div class="folders-grid">
+            <a href="#" class="folder-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=600" alt="Current Look 2026">
+                </div>
+                <h3>CURRENT LOOK 2026</h3>
+                <p>Gallery</p>
+            </a>
+
+            <a href="#" class="folder-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=600" alt="Studio Sessions">
+                </div>
+                <h3>STUDIO SESSIONS</h3>
+                <p>Gallery</p>
+            </a>
+
+            <a href="#" class="folder-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=600" alt="Outdoor Editorials">
+                </div>
+                <h3>OUTDOOR EDITORIALS</h3>
+                <p>Gallery</p>
+            </a>
+
+            <a href="#" class="folder-item">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=600" alt="Art & Music">
+                </div>
+                <h3>ART & MUSIC</h3>
+                <p>Gallery</p>
+            </a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© SVETLANKA. All rights reserved</p>
+    </footer>
+
+</body>
+</html>
