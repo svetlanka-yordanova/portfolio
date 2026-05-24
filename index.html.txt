@@ -235,7 +235,7 @@
                 flex-direction: column;
                 gap: 15px;
             }
-            
+             
             nav ul {
                 gap: 20px;
             }
